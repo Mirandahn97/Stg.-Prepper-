@@ -1,9 +1,9 @@
 import { Paragraph } from "../views/atoms/index.js"
 import { Layout } from "./layoutController.js"
 
-export const HomePage = () => {
-    const title = "Velkommen"
+export const ProductPage = () => {
+    const title = "Se vores produkter"
     const p = Paragraph()
-    p.innerText = "Velkommen til Sgt. Preppers webshop"
+    p.innerText = "Liste over produkter"
     return Layout(title, p)
 }

@@ -1,20 +1,40 @@
-import { Heading } from "../atoms/index.js"
+import { Heading, Li, Link, Ul } from "../atoms/index.js"
 
-export const Header = (className = '') => {
-    const header = document.createElement('header')
-    header.className = className
-    const heading = Heading(1)
-    heading.textContent = 'Stg. Prepper'
-    header.append(heading)
-    return header
+export const HeaderView = () => {
+    const element = document.createElement('header')
+    const h1 = Heading('Sgt. Prepper')
+    element.append(h1)
+    return element
 }
 
-export const Main = (className = '') => {
-    const main = document.createElement('main')
-    return main
+export const NavBarView = arrNavItems => {
+    const element = document.createElement('nav')
+    const ul = Ul('flex')
+
+    arrNavItems.forEach(item => {
+        const { href, title } = item
+
+        const li = Li()
+        const item1 = Link('href, title')
+        li.append(item1)
+        ul.append(li)
+    })
+
+    element.append(ul)
+
+    return element
+
 }
 
-export const Footer = (className = '') => {
-    const footer = document.createElement('footer')
-    return footer
+export const MainView = (title, content) => {
+    const element = document.createElement('main')
+    const h1 = Heading(title)
+    element.append(h1, content)
+    return element
+}
+
+export const FooterView = () => {
+    const element = document.createElement('footer')
+    element.innerHTML = `&copy; TECHCOLLEGE 2025`
+    return element
 }
