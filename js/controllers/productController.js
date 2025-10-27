@@ -1,17 +1,43 @@
-import { getList } from "../models/categroyModel.js";
-import { ProductListView } from "../views/organisms/productViews.js";
+import { getDetails, getList } from "../models/productModel.js"
+import { ProductDetailsView, ProductListView } from "../views/organisms/productViews.js"
 import { Layout } from "./layoutController.js"
 
 export const ProductPage = async () => {
+    const { category = 'vand-og-vandrensning', product } = Object.fromEntries(new URLSearchParams(location.search))
+    let html = ''
 
-const { category = 'vand-og-vandrensning'  } = Object.fromEntries(new URLSearchParams(location.search));
+    if (!product) {
+        html = await ProductList() // Husk await, hvis funktionen er async
+    } else {
+        html = await ProductDetails(product)
+    }
 
-//Bygger produkt liste
-const data = await getList(category)
-const html = ProductListView(data)
+    return html
+}
 
+export const ProductList = async () => {
+    const { category = 'vand-og-vandrensning' } = Object.fromEntries(new URLSearchParams(location.search))
 
-//Samler og retunerer side layoutet
-const layout = Layout('Produkter', html)
-return layout
+    // Bygger produktliste
+    const data = await getList(category)
+
+    const formattedProducts = data.map(item => ({
+        ...item, 
+        stockText: item.stock ? 'På lager' : 'Forventes på lager indenfor 1 -2 uger',
+        stockClass: item.stock ? 'text-green-600' : 'text-red-600'
+    }))
+
+    const html = ProductListView(formattedProducts, category)
+
+    // Samler og returnerer side layoutet
+    const layout = Layout('Produkter', html)
+    return layout
+}
+
+export const ProductDetails = async (product) => {
+    const data = await getDetails(product);
+    const html = ProductDetailsView(data);
+    const layout = Layout('Produkt', html)
+    return layout
+
 }

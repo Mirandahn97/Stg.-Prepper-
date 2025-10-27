@@ -9,25 +9,26 @@ export const HeaderView = () => {
 
 export const NavBarView = arrNavItems => {
     const element = document.createElement('nav')
+    element.className = 'bg-sky-950'
     const ul = Ul('flex')
 
     arrNavItems.forEach(item => {
         const { url, title } = item //Destructure assignment 
 
         const li = Li()
-        const item1 = Link(url, title)
+        const item1 = Link(url, title, `block p-4 ${item.textColor}`)
         li.append(item1)
         ul.append(li)
     })
 
     element.append(ul)
-
     return element
 
 }
 
 export const MainView = (title, content) => {
     const element = document.createElement('main')
+    element.className = "p-4 min-h-60"
     const h1 = Heading(title)
     element.append(h1, content)
     return element
