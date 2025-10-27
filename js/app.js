@@ -5,6 +5,5 @@ import { router } from './router/index.js';
 const ROOT = document.getElementById("container");
 
 router({
-  '/': () => HomePage(), // /Forside
-  '/produkter':() => ProductPage(), //Produkter
+  '/': () => ProductPage(), // /Forside
 }, '#app');
