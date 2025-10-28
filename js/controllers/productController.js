@@ -7,9 +7,9 @@ export const ProductPage = async () => {
     let html = ''
 
     if (!product) {
-        html = await ProductList() // Husk await, hvis funktionen er async
+        html = ProductList() 
     } else {
-        html = await ProductDetails(product)
+        html = ProductDetails(product)
     }
 
     return html

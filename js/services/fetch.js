@@ -14,6 +14,6 @@ if(!url) throw new Error('Missing url')
         const result = await response.json()
         return result
     } catch (error){
-console.error(error)
+        console.error(error)
     }
 }
