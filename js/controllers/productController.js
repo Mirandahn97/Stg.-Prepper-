@@ -1,9 +1,13 @@
+import { addToCart } from "../models/cartModel.js"
 import { getDetails, getList } from "../models/productModel.js"
+import { isLoggedIn } from "../services/auth.js"
 import { ProductDetailsView, ProductListView } from "../views/organisms/productViews.js"
 import { Layout } from "./layoutController.js"
 
 //Funktion der styrer hvilken produktside der skal vises
 export const ProductPage = async () => {
+    isLoggedIn()
+
     //Henter værdier fra URL'en (fx ?category=mad&product=123)
     const { category = 'vand-og-vandrensning', product } = Object.fromEntries(new URLSearchParams(location.search));
     let html = ''
@@ -51,12 +55,29 @@ export const ProductDetails = async (product) => {
     //Henter detaljer om det valgte produkt fra API'et
     const data = await getDetails(product);
 
-    //Laer HTML for produktdetalgerne
+    //Laver HTML for produktdetalgerne
     const html = ProductDetailsView(data);
+    const form = html.querySelector('form')
+
+    form.addEventListener('submit', (e) => {
+        handleAddToCart(e)
+    })
 
     //Pakker ind i layout (uden title)
     const layout = Layout('', html)
 
     //Retunerer hele siden klar til visning
     return layout
+}
+
+export const handleAddToCart = async (e) => {
+    e.preventDeafult()
+    const form = e.currentTarget
+
+    const productId = form.productId.value
+    const quantity = form.quantity.value
+
+    if (quantity && productId) {
+        const data = await addToCart(productId, quantity)
+    }
 }

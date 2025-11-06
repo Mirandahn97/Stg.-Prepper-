@@ -1,31 +1,31 @@
 import { price2Dkk } from "../../utils/index.js";
-import { Div, Fragment, Heading, Image, Link, Paragraph } from "../atoms/index.js"
+import { Button, Div, Form, Fragment, Heading, Image, Input, Link, Paragraph } from "../atoms/index.js"
 
 export const ProductListView = (products, category) => {
-    //Opretter fragment (blank html tag)
+    // Opretter fragment (blank html tag)
     const element = Fragment()
 
     products.forEach(product => {
-        //Destructure assingment fra product object
+        // Destructure assignment fra product object
         const { imageUrl, name, price, slug, stockText, stockClass, teaser } = product
 
-        //Opretter link box element
-        const linkBox = Link(`?category=${category}&product=${slug}`, '', 'block, mb-4 p-4 border rounded flex justify.between')
+        // Opretter link box element
+        const linkBox = Link(`?category=${category}&product=${slug}`,'', 'block mb-4 p-4 border rounded flex justify-between')
 
-        //Image kollone
-        const imgCol = Div('pr-4')
+        // Image kolonne
+        const imgCol = Div('pr-4')        
         const img = Image(`http://localhost:4000${imageUrl}`, name, 'max-w-[200px]')
         img.loading = 'lazy'
         imgCol.append(img)
 
-        //Info kolonne
+        // Info kolonne
         const infoCol = Div('flex-1 min-w-0')
-        const h2 = Heading(name, 2)
+        const h2 = Heading(name,2)
         const p = Paragraph()
         p.innerHTML = teaser
         infoCol.append(h2, p)
 
-        //Pris på lager kolonne
+        // Pris og lager kolonne
         const priceCol = Div('shrink-0 w-[200px] text-right')
         const priceText = Paragraph('text-xl font-bold')
         priceText.textContent = price2Dkk(price)
@@ -33,10 +33,10 @@ export const ProductListView = (products, category) => {
         stockTxt.textContent = stockText
         priceCol.append(priceText, stockTxt)
 
-        //Tilføjer tre kolonner til link box
+        // Tilføjer tre kolonner til link box
         linkBox.append(imgCol, infoCol, priceCol)
 
-        //Tilføjer link box til fragment element
+        // Tilføjer link box til fragment element
         element.append(linkBox)
     });
     return element
@@ -52,17 +52,26 @@ export const ProductDetailsView = (product) => {
     const img = Image(`http://localhost:4000${imageUrl}`, name, 'w-[90%] flex-shrink-0 rounded')
     imageCol.append(img)
 
-    const infoCol = Div('felx-1 min-w-0')
-    const h3 = Heading(name, 1, 'font-bold mb-2')
+    const infoCol = Div('flex-1 min-w-0')
+    const h3 = Heading(name,1,'font-bold mb-2')
     infoCol.append(h3)
 
     const p = Paragraph()
     p.innerHTML = description
     infoCol.append(p)
 
+    const form = Form('POST')
+    const productId = Input('productId','','hidden',id)
+    const quantity = Input('quantity', '', 'number', 1)
+    const button = Button('Læg i kurv', 'submit')
+
+    form.append(productId,quantity,button)
+    infoCol.append(form)
+
     const priceCol = Div('text-2xl')
     priceCol.innerHTML = price2Dkk(price)
 
     element.append(imageCol, infoCol, priceCol)
     return element
+    
 }
