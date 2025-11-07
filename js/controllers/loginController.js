@@ -39,8 +39,8 @@ export const handleLogin = async (e) => {
         const data = await Authenticate(username, password)
 
         if (data.accessToken) {
-            setSessionItem('sgtprepper_token', data)
-            location.href = ".index.htm"
+            setToken(data)
+            location.href = "./index.htm"
         }
     }
 }

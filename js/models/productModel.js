@@ -9,7 +9,7 @@ export const getList = async (category) => {
     //Bygger URL'en til API'et baseret på kategorien
     const url = `http://localhost:4000/api/products/${category}`
 
-    //Sender HET-request til serveren og venter på data
+    //Sender GET-request til serveren og venter på data
     const data = await request(url)
 
     //Retunerer listen af produkter fra serveren

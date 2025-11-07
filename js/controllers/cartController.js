@@ -1,7 +1,7 @@
 import { getCartList, removeFromCart } from "../models/cartModel.js"
 import { isLoggedIn } from "../services/auth.js"
 import { Div } from "../views/atoms/index.js"
-import { cartListHeaderView, cartListView, cartTotalView } from "../views/organisms/cartViews.js"
+import { cartListHeaderView, cartListView, cartTotalView } from "../views/organisms/cartView.js"
 import { Layout } from "./layoutController.js"
 
 export const CartPage = async () => {

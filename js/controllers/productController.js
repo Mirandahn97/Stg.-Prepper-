@@ -71,7 +71,7 @@ export const ProductDetails = async (product) => {
 }
 
 export const handleAddToCart = async (e) => {
-    e.preventDeafult()
+    e.preventDefault()
     const form = e.currentTarget
 
     const productId = form.productId.value
