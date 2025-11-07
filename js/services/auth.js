@@ -36,7 +36,7 @@ export const isTokenExpired = accessToken => {
         const payload = JSON.parse(atob(accessToken.split('.')[1]))
 
         if (payload.exp && payload.exp * 1000 < Date.now()) {
-            //console.log(`Token expired: ${new Date(payload.exp * 1000)}`);
+
 
             return true
         }
